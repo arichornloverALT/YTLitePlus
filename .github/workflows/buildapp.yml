@@ -48,8 +48,8 @@ on:
         type: boolean
       # dylib selection - @arichornloverALT
       dylib_selection:
-        description: "Select which dylibs to include"
-        default: "iSponsorBlock:on,YTUHD:on,YouPiP:on,Return-YouTube-Dislikes:on,YTABConfig:on,YouMute:on,DontEatMyContent:on,YTHoldForSpeed:on,YTVideoOverlay:on,YouQuality:on,YouTimeStamp:on,YouLoop:on"
+        description: "Select which dylibs to include (comma-separated, on/off)"
+        default: "iSponsorBlock:off,YTUHD:on,YouPiP:on,Return-YouTube-Dislikes:on,YTABConfig:on,YouMute:on,DontEatMyContent:on,YTHoldForSpeed:on,YTVideoOverlay:on,YouQuality:on,YouTimeStamp:on,YouLoop:on"
         required: false
         type: string
 
