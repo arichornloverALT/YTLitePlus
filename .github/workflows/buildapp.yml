@@ -46,79 +46,12 @@ on:
         default: false
         required: false
         type: boolean
-      # dylib selection options - @arichornloverALT
-      isponsorblock_dylib:
-        description: "Include iSponsorBlock.dylib"
-        default: "off"
+      # dylib selection - @arichornloverALT
+      dylib_selection:
+        description: "Select which dylibs to include"
+        default: "iSponsorBlock:on,YTUHD:on,YouPiP:on,Return-YouTube-Dislikes:on,YTABConfig:on,YouMute:on,DontEatMyContent:on,YTHoldForSpeed:on,YTVideoOverlay:on,YouQuality:on,YouTimeStamp:on,YouLoop:on"
         required: false
-        type: choice
-        options: [on, off]
-      ytubehd_dylib:
-        description: "Include YTUHD.dylib"
-        default: "on"
-        required: false
-        type: choice
-        options: [on, off]
-      youpip_dylib:
-        description: "Include YouPiP.dylib"
-        default: "on"
-        required: false
-        type: choice
-        options: [on, off]
-      returndislikes_dylib:
-        description: "Include Return-YouTube-Dislikes.dylib"
-        default: "on"
-        required: false
-        type: choice
-        options: [on, off]
-      ytabconfig_dylib:
-        description: "Include YTABConfig.dylib"
-        default: "on"
-        required: false
-        type: choice
-        options: [on, off]
-      youmute_dylib:
-        description: "Include YouMute.dylib"
-        default: "on"
-        required: false
-        type: choice
-        options: [on, off]
-      donteatmycontent_dylib:
-        description: "Include DontEatMyContent.dylib"
-        default: "on"
-        required: false
-        type: choice
-        options: [on, off]
-      ytholdforspeed_dylib:
-        description: "Include YTHoldForSpeed.dylib"
-        default: "on"
-        required: false
-        type: choice
-        options: [on, off]
-      ytvideooverlay_dylib:
-        description: "Include YTVideoOverlay.dylib"
-        default: "on"
-        required: false
-        type: choice
-        options: [on, off]
-      youquality_dylib:
-        description: "Include YouQuality.dylib"
-        default: "on"
-        required: false
-        type: choice
-        options: [on, off]
-      youtimestamp_dylib:
-        description: "Include YouTimeStamp.dylib"
-        default: "on"
-        required: false
-        type: choice
-        options: [on, off]
-      youloop_dylib:
-        description: "Include YouLoop.dylib"
-        default: "on"
-        required: false
-        type: choice
-        options: [on, off]
+        type: string
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -239,10 +172,19 @@ jobs:
           sed -i '' "s/^DISPLAY_NAME.*$/DISPLAY_NAME = ${{ env.APP_NAME }}/" Makefile
           sed -i '' "s/^PACKAGE_VERSION.*$/PACKAGE_VERSION = ${{ env.YT_VERSION }}-${{ env.YTLITE_VERSION }}/" Makefile
           sed -i '' "s/^export TARGET.*$/export TARGET = iphone:clang:${{ inputs.sdk_version }}:14.0/" Makefile
-          sed -i '' "s/^YTLitePlus_INJECT_DYLIBS.*$/YTLitePlus_INJECT_DYLIBS = Tweaks\/YTLite\/var\/jb\/Library\/MobileSubstrate\/DynamicLibraries\/YTLite.dylib .theos\/obj\/libcolorpicker.dylib$(if [[ ${{ inputs.isponsorblock_dylib }} == "on" ]]; then echo " .theos\/obj\/iSponsorBlock.dylib"; fi)$(if [[ ${{ inputs.ytubehd_dylib }} == "on" ]]; then echo " .theos\/obj\/YTUHD.dylib"; fi)$(if [[ ${{ inputs.youpip_dylib }} == "on" ]]; then echo " .theos\/obj\/YouPiP.dylib"; fi)$(if [[ ${{ inputs.returndislikes_dylib }} == "on" ]]; then echo " .theos\/obj\/YouTubeDislikesReturn.dylib"; fi)$(if [[ ${{ inputs.ytabconfig_dylib }} == "on" ]]; then echo " .theos\/obj\/YTABConfig.dylib"; fi)$(if [[ ${{ inputs.youmute_dylib }} == "on" ]]; then echo " .theos\/obj\/YouMute.dylib"; fi)$(if [[ ${{ inputs.donteatmycontent_dylib }} == "on" ]]; then echo " .theos\/obj\/DontEatMyContent.dylib"; fi)$(if [[ ${{ inputs.ytholdforspeed_dylib }} == "on" ]]; then echo " .theos\/obj\/YTHoldForSpeed.dylib"; fi)$(if [[ ${{ inputs.ytvideooverlay_dylib }} == "on" ]]; then echo " .theos\/obj\/YTVideoOverlay.dylib"; fi)$(if [[ ${{ inputs.youquality_dylib }} == "on" ]]; then echo " .theos\/obj\/YouQuality.dylib"; fi)$(if [[ ${{ inputs.youtimestamp_dylib }} == "on" ]]; then echo " .theos\/obj\/YouTimeStamp.dylib"; fi)$(if [[ ${{ inputs.youloop_dylib }} == "on" ]]; then echo " .theos\/obj\/YouLoop.dylib"; fi)" Makefile
+          dylibs_string=$(echo ${{ inputs.dylib_selection }} | sed 's/:/ /g' | tr ',' '' | sed 's/ /:/g')
+          dylibs_arr=( $(echo $dylibs_string) )
+          dylib_string="Tweaks\/YTLite\/var\/jb\/Library\/MobileSubstrate\/DynamicLibraries\/YTLite.dylib .theos\/obj\/libcolorpicker.dylib"
+          for i in "${dylibs_arr[@]}"; do
+            dylib_name=$(echo $i | cut -d':' -f1)
+            dylib_state=$(echo $i | cut -d':' -f2)
+            if [[ "$dylib_state" == "on" ]]; then
+              dylib_string="$dylib_string .theos\/obj\/$dylib_name.dylib"
+            fi
+          done
+          sed -i '' "s/^YTLitePlus_INJECT_DYLIBS.*$/YTLitePlus_INJECT_DYLIBS = $dylib_string/" Makefile
           # Build the package
           make package
-          # Rename the package based on the version
           (mv "packages/$(ls -t packages | head -n1)" "packages/YTLitePlus_${{ env.YT_VERSION }}_${{ env.YTLITE_VERSION }}.ipa")
           # Pass package name to the upload step
           echo "package=$(ls -t packages | head -n1)" >> $GITHUB_OUTPUT
