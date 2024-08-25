@@ -47,7 +47,7 @@ on:
         required: false
         type: boolean
       # dylib selection - @arichornloverALT
-      dylib_selection:
+      dylib_flags:
         description: "Select which dylibs to include (comma-separated, on/off)"
         default: "iSponsorBlock:off,YTUHD:on,YouPiP:on,Return-YouTube-Dislikes:on,YTABConfig:on,YouMute:on,DontEatMyContent:on,YTHoldForSpeed:on,YTVideoOverlay:on,YouQuality:on,YouTimeStamp:on,YouLoop:on"
         required: false
@@ -172,10 +172,9 @@ jobs:
           sed -i '' "s/^DISPLAY_NAME.*$/DISPLAY_NAME = ${{ env.APP_NAME }}/" Makefile
           sed -i '' "s/^PACKAGE_VERSION.*$/PACKAGE_VERSION = ${{ env.YT_VERSION }}-${{ env.YTLITE_VERSION }}/" Makefile
           sed -i '' "s/^export TARGET.*$/export TARGET = iphone:clang:${{ inputs.sdk_version }}:14.0/" Makefile
-          dylibs_string=$(echo ${{ inputs.dylib_selection }} | sed 's/:/ /g' | tr ',' '' | sed 's/ /:/g')
-          dylibs_arr=( $(echo $dylibs_string) )
+          dylib_flags=$(echo ${{ inputs.dylib_flags }} | sed 's/ / /g' | tr ',' ' ')
           dylib_string="Tweaks\/YTLite\/var\/jb\/Library\/MobileSubstrate\/DynamicLibraries\/YTLite.dylib .theos\/obj\/libcolorpicker.dylib"
-          for i in "${dylibs_arr[@]}"; do
+          for i in $dylib_flags; do
             dylib_name=$(echo $i | cut -d':' -f1)
             dylib_state=$(echo $i | cut -d':' -f2)
             if [[ "$dylib_state" == "on" ]]; then
