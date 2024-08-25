@@ -123,7 +123,7 @@ static const NSInteger YTLiteSection = 789;
         selectBlock:^BOOL (YTSettingsCell *cell, NSUInteger arg1) {
             if (IS_ENABLED(@"switchCopyandPasteFunctionality_enabled")) {
                 // Export Settings functionality
-                NSString *dateString = [self getCurrentDateAsString];
+                NSString *dateString = [NSDateFormatter localizedStringFromDate:[NSDate date] dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterFullStyle];
                 NSString *fileName = [NSString stringWithFormat:@"YTLitePlusSettings_%@", dateString];
                 NSURL *tempFileURL = [NSURL fileURLWithPath:[NSTemporaryDirectory() stringByAppendingPathComponent:[fileName stringByAppendingString:@".txt"]]];
                 NSMutableString *settingsString = [NSMutableString string];
