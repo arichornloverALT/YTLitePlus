@@ -1,4 +1,120 @@
 :root {
+  --font-xl: 2rem;
+  --font-lg: 1.5rem;
+  --font-md: 1.2rem;
+  --font-sm: 1rem;
+  --font-xs: 0.875rem;
+  --font-xxs: 0.75rem;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --font-xl: 1rem;
+    --font-lg: 0.9rem;
+    --font-md: 0.8rem;
+    --font-sm: 0.7rem;
+    --font-xs: 0.7rem;
+    --font-xxs: 0.7rem;
+  }
+}
+
+body {
+  font-family: Arial, sans-serif;
+  color: #333;
+  font-size: var(--font-md);
+  background-color: #f8f8f8;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.container {
+  max-width: 960px;
+  padding: 0 20px;
+  margin: auto;
+}
+
+h1,
+h2,
+h3 {
+  font-family: Arial, sans-serif;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+.app__header {
+  display: flex;
+  flex-direction: column;
+  margin: 32px 0;
+}
+
+.app__logo {
+  max-width: 100px;
+  max-height: 100px;
+}
+
+.app__screenshots-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-gap: 20px;
+  padding: 30px 0;
+}
+
+.app__screenshot {
+  max-width: 100%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.app__screenshot:hover {
+  transform: scale(1.05);
+}
+
+.app__description {
+  margin-top: 16px;
+  color: #666;
+}
+
+.app__buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.app__button img {
+  max-width: 150px;
+  height: auto;
+  margin: 0 10px;
+}
+
+.app__section-title {
+  font-size: var(--font-lg);
+}
+
+.footer {
+  padding: 16px 0;
+  font-size: var(--font-xs);
+  color: #777;
+}
+
+.footer__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer__links {
+  list-style: none;
+  display: flex;
+  padding: 0;
+}
+
+.footer__link {
+  margin-right: 8px;
+}
+
+:root {
   --font-xl: 42px;
   --font-lg: 24px;
   --font-md: 20px;
