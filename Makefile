@@ -1,5 +1,5 @@
 TARGET = iphone:clang:16.5:14.0
-YTLitePlus-$(RANDOM_SUFFIX)_USE_FISHHOOK = 0
+YTLitePlus$(RANDOM_SUFFIX)_USE_FISHHOOK = 0
 ARCHS = arm64
 MODULES = jailed
 FINALPACKAGE = 1
@@ -8,7 +8,7 @@ PACKAGE_VERSION = X.X.X-X.X
 
 RANDOM_SUFFIX := $(shell openssl rand -hex 4)
 
-TWEAK_NAME = YTLitePlus-$(RANDOM_SUFFIX)
+TWEAK_NAME = YTLitePlus$(RANDOM_SUFFIX)
 DISPLAY_NAME = YouTube
 BUNDLE_ID = com.google.ios.youtube
 
@@ -17,11 +17,11 @@ EXTRA_CFLAGS := $(addprefix -I,$(shell find Tweaks/FLEX -name '*.h' -exec dirnam
 # Allow YouTubeHeader to be accessible using #include <...>
 export ADDITIONAL_CFLAGS = -I$(THEOS_PROJECT_DIR)/Tweaks
 
-YTLitePlus-$(RANDOM_SUFFIX)_INJECT_DYLIBS = Tweaks/YTLite/var/jb/Library/MobileSubstrate/DynamicLibraries/YTLite.dylib .theos/obj/libcolorpicker.dylib .theos/obj/iSponsorBlock.dylib .theos/obj/YTUHD.dylib .theos/obj/YouPiP.dylib .theos/obj/YouTubeDislikesReturn.dylib .theos/obj/YTABConfig.dylib .theos/obj/YouMute.dylib .theos/obj/DontEatMyContent.dylib .theos/obj/YTHoldForSpeed.dylib .theos/obj/YTVideoOverlay.dylib .theos/obj/YouGroupSettings.dylib .theos/obj/YouQuality.dylib .theos/obj/YouTimeStamp.dylib .theos/obj/YouLoop.dylib
-YTLitePlus-$(RANDOM_SUFFIX)_FILES = YTLitePlus.xm $(shell find Source -name '*.xm' -o -name '*.x' -o -name '*.m') $(shell find Tweaks/FLEX -type f \( -iname \*.c -o -iname \*.m -o -iname \*.mm \))
-YTLitePlus-$(RANDOM_SUFFIX)_IPA = ./tmp/Payload/YouTube.app
-YTLitePlus-$(RANDOM_SUFFIX)_CFLAGS = -fobjc-arc -Wno-deprecated-declarations -Wno-unsupported-availability-guard -Wno-unused-but-set-variable -DTWEAK_VERSION=$(PACKAGE_VERSION) $(EXTRA_CFLAGS)
-YTLitePlus-$(RANDOM_SUFFIX)_FRAMEWORKS = UIKit Security
+YTLitePlus$(RANDOM_SUFFIX)_INJECT_DYLIBS = Tweaks/YTLite/var/jb/Library/MobileSubstrate/DynamicLibraries/YTLite.dylib .theos/obj/libcolorpicker.dylib .theos/obj/iSponsorBlock.dylib .theos/obj/YTUHD.dylib .theos/obj/YouPiP.dylib .theos/obj/YouTubeDislikesReturn.dylib .theos/obj/YTABConfig.dylib .theos/obj/YouMute.dylib .theos/obj/DontEatMyContent.dylib .theos/obj/YTHoldForSpeed.dylib .theos/obj/YTVideoOverlay.dylib .theos/obj/YouGroupSettings.dylib .theos/obj/YouQuality.dylib .theos/obj/YouTimeStamp.dylib .theos/obj/YouLoop.dylib
+YTLitePlus$(RANDOM_SUFFIX)_FILES = YTLitePlus.xm $(shell find Source -name '*.xm' -o -name '*.x' -o -name '*.m') $(shell find Tweaks/FLEX -type f \( -iname \*.c -o -iname \*.m -o -iname \*.mm \))
+YTLitePlus$(RANDOM_SUFFIX)_IPA = ./tmp/Payload/YouTube.app
+YTLitePlus$(RANDOM_SUFFIX)_CFLAGS = -fobjc-arc -Wno-deprecated-declarations -Wno-unsupported-availability-guard -Wno-unused-but-set-variable -DTWEAK_VERSION=$(PACKAGE_VERSION) $(EXTRA_CFLAGS)
+YTLitePlus$(RANDOM_SUFFIX)_FRAMEWORKS = UIKit Security
 
 include $(THEOS)/makefiles/common.mk
 include $(THEOS_MAKE_PATH)/tweak.mk
