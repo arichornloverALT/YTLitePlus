@@ -23,17 +23,6 @@ YTLitePlus_IPA = ./tmp/Payload/YouTube.app
 YTLitePlus_CFLAGS = -fobjc-arc -Wno-deprecated-declarations -Wno-unsupported-availability-guard -Wno-unused-but-set-variable -DTWEAK_VERSION=$(PACKAGE_VERSION) $(EXTRA_CFLAGS)
 YTLitePlus_FRAMEWORKS = UIKit Security
 
-after-stage::
-	@mv .theos/obj/YTLitePlus.dylib YTLitePlus$(RANDOM_SUFFIX).dylib
-	@mv .theos/obj/YTLitePlus YTLitePlus$(RANDOM_SUFFIX)
-
-YTLitePlus$(RANDOM_SUFFIX)_USE_FISHHOOK = $(YTLitePlus_USE_FISHHOOK)
-YTLitePlus$(RANDOM_SUFFIX)_INJECT_DYLIBS = $(YTLitePlus_INJECT_DYLIBS)
-YTLitePlus$(RANDOM_SUFFIX)_FILES = $(YTLitePlus_FILES)
-YTLitePlus$(RANDOM_SUFFIX)_IPA = $(YTLitePlus_IPA)
-YTLitePlus$(RANDOM_SUFFIX)_CFLAGS = $(YTLitePlus_CFLAGS)
-YTLitePlus$(RANDOM_SUFFIX)_FRAMEWORKS = $(YTLitePlus_FRAMEWORKS)
-
 include $(THEOS)/makefiles/common.mk
 include $(THEOS_MAKE_PATH)/tweak.mk
 SUBPROJECTS += Tweaks/Alderis Tweaks/iSponsorBlock Tweaks/YTUHD Tweaks/YouPiP Tweaks/Return-YouTube-Dislikes Tweaks/YTABConfig Tweaks/YouMute Tweaks/DontEatMyContent Tweaks/YTHoldForSpeed Tweaks/YTVideoOverlay Tweaks/YouQuality Tweaks/YouTimeStamp Tweaks/YouGroupSettings Tweaks/YouLoop
