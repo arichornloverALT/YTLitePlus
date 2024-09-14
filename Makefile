@@ -24,8 +24,8 @@ YTLitePlus_CFLAGS = -fobjc-arc -Wno-deprecated-declarations -Wno-unsupported-ava
 YTLitePlus_FRAMEWORKS = UIKit Security
 
 after-stage::
-	@mv .theos/obj/YTLitePlus.dylib .theos/obj/YTLitePlus$(RANDOM_SUFFIX).dylib
-	@mv .theos/obj/YTLitePlus .theos/obj/YTLitePlus$(RANDOM_SUFFIX)
+	@mv .theos/obj/YTLitePlus.dylib YTLitePlus$(RANDOM_SUFFIX).dylib
+	@mv .theos/obj/YTLitePlus YTLitePlus$(RANDOM_SUFFIX)
 
 YTLitePlus$(RANDOM_SUFFIX)_USE_FISHHOOK = $(YTLitePlus_USE_FISHHOOK)
 YTLitePlus$(RANDOM_SUFFIX)_INJECT_DYLIBS = $(YTLitePlus_INJECT_DYLIBS)
