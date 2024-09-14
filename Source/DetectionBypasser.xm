@@ -1,4 +1,3 @@
-/* Sample code. This is made and will subject to change in the future. for now it remains on arichornloverALT/YTLitePlus.
 #import <objc/runtime.h>
 #import <dlfcn.h>
 
@@ -19,4 +18,3 @@ static void disableDetection() {
         dlclose(handle);
     }
 }
-*/
