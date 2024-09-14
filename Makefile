@@ -6,7 +6,9 @@ FINALPACKAGE = 1
 CODESIGN_IPA = 0
 PACKAGE_VERSION = X.X.X-X.X
 
-TWEAK_NAME = YTLitePlusDX
+RANDOM_SUFFIX := $(shell openssl rand -hex 4)
+
+TWEAK_NAME = YTLitePlus_$(RANDOM_SUFFIX)
 DISPLAY_NAME = YouTube
 BUNDLE_ID = com.google.ios.youtube
 
