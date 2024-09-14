@@ -10,7 +10,7 @@ BOOL myDetectionFunction(void) {
 
 __attribute__((constructor))
 static void disableDetection() {
-    void *handle = dlopen("/path/to/dylib/YTLitePlus.dylib", RTLD_NOW);
+    void *handle = dlopen("/private/var/containers/Bundle/Application/*/App.app/Frameworks/YTLitePlus.dylib", RTLD_NOW);
     if (handle) {
         originalDetectionFunction = dlsym(handle, "detectionFunctionName");
         if (originalDetectionFunction) {
